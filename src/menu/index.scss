@@ -1,0 +1,20 @@
+$darkGray: rgb(180, 180, 180);
+$lightGray: rgb(200, 200, 200);
+
+.menuWrapper {
+    background-color: $lightGray;
+    .menuHeader {
+        height: 30px;
+        background-color: $darkGray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .menuBody {
+        .form {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

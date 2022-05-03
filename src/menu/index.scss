@@ -1,20 +1,67 @@
 $darkGray: rgb(180, 180, 180);
 $lightGray: rgb(200, 200, 200);
 
-.menuWrapper {
+.menuOverlay {
     background-color: $lightGray;
-    .menuHeader {
-        height: 30px;
-        background-color: $darkGray;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-    }
-    .menuBody {
-        .form {
+    box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+    .menuWrapper {
+        height: 100%;
+        border-radius: 10px;
+        display: grid;
+        grid-template-rows: min-content;
+        .menuHeader {
+            padding: 0 10px;
+            margin-bottom: 10px;
+            border-radius: 10px 10px 0 0;
+            height: 30px;
+            background-color: $darkGray;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
         }
+        .menuBody {
+            height: 100%;
+            overflow: scroll;
+            padding: 0 10px;
+            .form {
+                display: flex;
+                flex-direction: column;
+                // max-width: 500px;
+                margin: auto;
+
+                .formSelector {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+                    text-align: left;
+
+                    input {
+                        min-height: 20px;
+                    }
+                    select {
+                        min-height: 20px;
+                        option {
+                        }
+                    }
+                }
+            }
+        }
+        .menuBody::-webkit-scrollbar {
+            width: 4px;
+            height: 0px;
+        }
+        .menuBody::-webkit-scrollbar-track {
+            background: $lightGray;
+        }
+        .menuBody::-webkit-scrollbar-thumb {
+            background: $darkGray;
+        }
+        .menuBody::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    }
+    .menuWrapperClose {
+        border-radius: 10px;
     }
 }

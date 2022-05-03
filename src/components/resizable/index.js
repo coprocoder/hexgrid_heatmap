@@ -2,33 +2,35 @@ import React, { useRef, useState } from "react";
 import "./index.scss";
 
 // Resizable Component
-const ResizableBox = ({ children, posX, posY }) => {
+const ResizableBox = ({ children, width, height, posX, posY }) => {
   const node = useRef();
-  const resizerSize = { width: 15, height: 15 };
-  const [width, setWidth] = useState(200);
-  const [height, setHeight] = useState(200);
+  const resizerSize = { width: 5, height: 5 };
+  const [boxWidth, setBoxWidth] = useState(width);
+  const [boxHeight, setBoxHeight] = useState(height);
 
   const resizing = ({ x, y }) => {
-    x && setWidth(x - posX - node.current.offsetLeft + resizerSize.width / 2);
-    y && setHeight(y - posY - node.current.offsetTop + resizerSize.height / 2);
+    x &&
+      setBoxWidth(x - posX - node.current.offsetLeft + resizerSize.width / 2);
+    y &&
+      setBoxHeight(y - posY - node.current.offsetTop + resizerSize.height / 2);
   };
 
   const style = {
-    height: height,
-    width: width,
+    height: boxHeight,
+    width: boxWidth,
   };
   return (
     <div ref={node} className="resizable" style={style}>
       {children}
       <ResizerVertical
         fResizing={resizing}
-        resizerWidth={width}
+        resizerWidth={boxWidth}
         resizerHeight={resizerSize.height}
       />
       <ResizerHorizontal
         fResizing={resizing}
         resizerWidth={resizerSize.width}
-        resizerHeight={height}
+        resizerHeight={boxHeight}
       />
       <ResizerBox
         fResizing={resizing}

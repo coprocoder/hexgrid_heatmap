@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Draggable from "react-draggable"; // Both at the same time
 
 import ResizableBox from "../components/resizable";
+import urls from "../urls.json";
+import { map } from "../map";
 
 import "./index.scss";
 
@@ -46,12 +48,38 @@ const Menu = () => {
       <div className="formSelector">
         Name:
         <select>
-          {options.map((x) => (
-            <option>{x}</option>
+          {options.map((item, index) => (
+            <option key={index}>{item}</option>
           ))}
         </select>
       </div>
     );
+  };
+
+  const getGeoJSON = async (form) => {
+    console.log({ form });
+    let url = urls.heatmap;
+    let options = {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify({
+        property_one: 1,
+        property_two: 2,
+      }),
+    };
+    let response = await fetch(url, options);
+    let hexGridGeoJSON = await response.json();
+    return hexGridGeoJSON;
+  };
+
+  const updateHexGrid = async (e, form) => {
+    e.preventDefault();
+    const gridJSON = await getGeoJSON(form);
+    map.getSource("hexgridSource").setData(gridJSON);
   };
 
   return (
@@ -63,17 +91,7 @@ const Menu = () => {
           console.log("drag click");
         }}
       >
-        <form className="form">
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
-          {getFormSelector()}
+        <form className="form" onSubmit={updateHexGrid}>
           {getFormSelector()}
           <input type="submit" value="Submit" />
         </form>

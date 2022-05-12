@@ -28,9 +28,9 @@ const MapComponent = () => {
         "fill-color": {
           property: "value",
           stops: [
-            [0, "green"],
+            [0, "red"],
             [0.5, "yellow"],
-            [1, "red"],
+            [1, "green"],
           ],
         },
         "fill-outline-color": "#3bb2d0",

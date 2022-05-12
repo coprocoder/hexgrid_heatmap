@@ -47,9 +47,7 @@ const Menu = () => {
   const [categories, setCategories] = useState({});
   const [selectedCat, setSetelctedCat] = useState(null);
   const [selectedSubCat, setSetelctedSubCat] = useState(null);
-
-  console.log({ selectedCat });
-  console.log({ selectedSubCat });
+  const [isWait, setWait] = useState();
 
   useEffect(() => {
     updateCategories();

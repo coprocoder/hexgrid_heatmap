@@ -1,6 +1,4 @@
 
-import "./App.css";
-
 import MapComponent from "./map";
 import NavigationMenu from "./menu";
 

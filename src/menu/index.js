@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable"; // Both at the same time
 
 import ResizableBox from "../components/resizable";
 import urls from "../urls.json";
 import { map } from "../map";
 
+import Selector from "./selector";
 import "./index.scss";
 
 const NavigationMenu = () => {
@@ -19,6 +20,7 @@ const NavigationMenu = () => {
   return (
     <Draggable
       handle=".menuHeader"
+      bounds={".map-container"}
       defaultPosition={{ x: defaultX, y: defaultY }}
       scale={1}
       onStop={(event, element) => {
@@ -42,18 +44,32 @@ const NavigationMenu = () => {
 export default NavigationMenu;
 
 const Menu = () => {
-  const getFormSelector = () => {
-    const options = ["test1", "test2", "test3"];
-    return (
-      <div className="formSelector">
-        Name:
-        <select>
-          {options.map((item, index) => (
-            <option key={index}>{item}</option>
-          ))}
-        </select>
-      </div>
-    );
+  const [categories, setCategories] = useState({});
+  const [selectedCat, setSetelctedCat] = useState(null);
+  const [selectedSubCat, setSetelctedSubCat] = useState(null);
+
+  console.log({ selectedCat });
+  console.log({ selectedSubCat });
+
+  useEffect(() => {
+    updateCategories();
+  }, []);
+
+  const updateCategories = async () => {
+    const url = urls.categories;
+    const options = {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify({}),
+    };
+    let response = await fetch(url, options);
+    const categories = await response.json();
+    console.log({ categories });
+    setCategories(categories);
   };
 
   const getGeoJSON = async (form) => {
@@ -67,8 +83,8 @@ const Menu = () => {
         "Content-Type": "application/json;charset=UTF-8",
       },
       body: JSON.stringify({
-        property_one: 1,
-        property_two: 2,
+        cat: selectedCat.label,
+        subCat: selectedSubCat.label,
       }),
     };
     let response = await fetch(url, options);
@@ -92,8 +108,27 @@ const Menu = () => {
         }}
       >
         <form className="form" onSubmit={updateHexGrid}>
-          {getFormSelector()}
-          <input type="submit" value="Submit" />
+          <Selector
+            id="cat"
+            placeholder={"Выберите категорию"}
+            options={Object.keys(categories || {})}
+            selected={selectedCat}
+            onSelect={(cat) => {
+              setSetelctedCat(cat);
+              setSetelctedSubCat(null);
+            }}
+          />
+          <Selector
+            id="subcat"
+            isDisabled={!selectedCat}
+            placeholder={"Выберите подкатегорию"}
+            options={selectedCat ? categories[selectedCat.label] : []}
+            selected={selectedSubCat}
+            onSelect={(subCat) => {
+              setSetelctedSubCat(subCat);
+            }}
+          />
+          <input type="submit" value="Отправить" id="formActionBtn" />
         </form>
       </div>
     </div>

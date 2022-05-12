@@ -43,14 +43,14 @@ const MapComponent = () => {
     let areaPopup = null;
     map.on("mousemove", "hexgridLayer", (e) => {
       map.getCanvas().style.cursor = "pointer";
-      let districts_name = e.features[0].properties.value;
+      const value = e.features[0].properties.value.toFixed(2);
       if (!!areaPopup) areaPopup.remove();
       areaPopup = new mapboxgl.Popup({
         closeOnClick: false,
         closeButton: false,
       })
         .setLngLat(e.lngLat)
-        .setHTML(districts_name)
+        .setHTML(value)
         .addTo(map);
     });
     map.on("mouseleave", "hexgridLayer", (e) => {

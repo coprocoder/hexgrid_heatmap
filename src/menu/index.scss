@@ -1,5 +1,6 @@
-$darkGray: rgb(180, 180, 180);
-$lightGray: rgb(200, 200, 200);
+$darkGray: rgb(200, 200, 200);
+$lightGray: rgb(230, 230, 230);
+$lightBlue: #cae5f8;
 
 .menuOverlay {
     background-color: $lightGray;
@@ -13,7 +14,7 @@ $lightGray: rgb(200, 200, 200);
             padding: 0 10px;
             margin-bottom: 10px;
             border-radius: 10px 10px 0 0;
-            height: 30px;
+            height: 40px;
             background-color: $darkGray;
             display: flex;
             align-items: center;
@@ -27,7 +28,6 @@ $lightGray: rgb(200, 200, 200);
             .form {
                 display: flex;
                 flex-direction: column;
-                // max-width: 500px;
                 margin: auto;
 
                 .formSelector {
@@ -35,15 +35,14 @@ $lightGray: rgb(200, 200, 200);
                     flex-direction: column;
                     margin-bottom: 10px;
                     text-align: left;
-
-                    input {
-                        min-height: 20px;
-                    }
-                    select {
-                        min-height: 20px;
-                        option {
-                        }
-                    }
+                }
+                #formActionBtn {
+                    height: 30px;
+                    border: none;
+                    border-radius: 4px;
+                    box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+                    background-color: $lightBlue;
+                    font-size: 1em;
                 }
             }
         }

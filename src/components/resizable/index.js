@@ -49,12 +49,10 @@ const ResizerVertical = ({ fResizing, resizerWidth, resizerHeight }) => {
   };
 
   const onMouseMove = (e) => {
-    console.log({ e });
     fResizing({ y: e.clientY });
   };
 
   const onMouseUp = (e) => {
-    console.log("onMouseUp");
     window.removeEventListener("mousemove", onMouseMove, false);
     window.removeEventListener("mouseup", onMouseUp, false);
   };
@@ -76,7 +74,6 @@ const ResizerHorizontal = ({ fResizing, resizerWidth, resizerHeight }) => {
   };
 
   const onMouseMove = (e) => {
-    console.log({ e });
     fResizing({ x: e.clientX });
   };
 

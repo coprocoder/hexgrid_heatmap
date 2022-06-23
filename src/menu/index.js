@@ -44,7 +44,7 @@ const NavigationMenu = () => {
 export default NavigationMenu;
 
 const Menu = () => {
-  const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState([]);
   const [selectedCat, setSetelctedCat] = useState(null);
   const [selectedSubCat, setSetelctedSubCat] = useState(null);
   const [isWait, setWait] = useState();
@@ -96,6 +96,18 @@ const Menu = () => {
     map.getSource("hexgridSource").setData(gridJSON);
   };
 
+  const getSubcategory = () => {
+    let subCat = [];
+    if (selectedCat) {
+      const curCatData = categories.filter(
+        (x) => x.category == selectedCat.label
+      )[0];
+      const curSubcatData = curCatData.subcategories;
+      if (curSubcatData) subCat = curSubcatData.map((x) => x.subcategory);
+    }
+    return subCat;
+  };
+
   return (
     <div className="menuWrapper">
       <div className="menuHeader">Меню</div>
@@ -109,9 +121,10 @@ const Menu = () => {
           <Selector
             id="cat"
             placeholder={"Выберите категорию"}
-            options={Object.keys(categories || {})}
+            options={categories && categories.map((x) => x.category)}
             selected={selectedCat}
             onSelect={(cat) => {
+              console.log({ cat });
               setSetelctedCat(cat);
               setSetelctedSubCat(null);
             }}
@@ -120,9 +133,10 @@ const Menu = () => {
             id="subcat"
             isDisabled={!selectedCat}
             placeholder={"Выберите подкатегорию"}
-            options={selectedCat ? categories[selectedCat.label] : []}
+            options={getSubcategory()}
             selected={selectedSubCat}
             onSelect={(subCat) => {
+              console.log({ subCat });
               setSetelctedSubCat(subCat);
             }}
           />
